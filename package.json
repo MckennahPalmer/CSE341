@@ -2,9 +2,10 @@
   "name": "cse341",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "name.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node name.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/MckennahPalmer/CSE341/issues"
   },
-  "homepage": "https://github.com/MckennahPalmer/CSE341#readme"
+  "homepage": "https://github.com/MckennahPalmer/CSE341#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
