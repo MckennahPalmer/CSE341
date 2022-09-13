@@ -11,6 +11,6 @@ const server = http.createServer((req, res) => {
   res.end('Mckennah Palmer');
 });*/
 
-app.listen(port, hostname, () => {
+app.listen(port, () => {
   console.log(`App listening on ${port}`);
 });
