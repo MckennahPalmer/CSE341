@@ -1,7 +1,13 @@
-const routes = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
-routes.get('/', (req, res) => {
-  res.send('Mckennah Palmer');
+router.get('/', function (req, res) {
+  console.log('User Router Working');
+  res
+    .status(200)
+    .send(
+      "<html><body style='background-color:green;'><div style='color:white;'>Hey! You made it!</div></body></html>",
+    );
 });
 
-module.exports = routes;
+module.exports = router;

@@ -2,10 +2,10 @@
   "name": "cse341",
   "version": "1.0.0",
   "description": "",
-  "main": "name.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node name.js"
+    "start": "node phonebook.js"
   },
   "repository": {
     "type": "git",

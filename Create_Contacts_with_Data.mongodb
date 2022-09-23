@@ -1,0 +1,56 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+const database = 'CSE341';
+const collection = 'contacts';
+
+// The current database to use.
+use(database);
+
+// Create a new collection.
+db.createCollection(collection);
+
+db.contacts.find({});
+
+db.contacts.insertMany([
+  {
+    "id": 1,
+    "firstName": "Jim",
+    "lastName": "Dandy",
+    "email": "jim_dandy@gmail.com",
+    "favoriteColor": "pink",
+    "birthday": "01/01/2001"
+  },
+  {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Dandy",
+    "email": "jane_dandy@gmail.com",
+    "favoriteColor": "black",
+    "birthday": "01/02/2001"
+  },
+  {
+    "id": 3,
+    "firstName": "Bryan",
+    "lastName": "Palmer",
+    "email": "bpalm2006@gmail.com",
+    "favoriteColor": "Aquamarine",
+    "birthday": "10/10/74"
+  },
+  {
+    "id": 4,
+    "firstName": "Traci",
+    "lastName": "Palmer",
+    "email": "tpalm2006@gmail.com",
+    "favoriteColor": "Periwinkle",
+    "birthday": "08/08/70"
+  },
+  {
+    "id": 5,
+    "firstName": "Mckennah",
+    "lastName": "Palmer",
+    "email": "mkpalm2006@gmail.com",
+    "favoriteColor": "Green",
+    "birthday": "06/09/00"
+  }
+]);
