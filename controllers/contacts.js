@@ -10,12 +10,12 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
-  const id = parseInt(req.params.id);
-  const oid = ObjectId(req.params.oid);
+  if (!req.params.id) {
+    throw Error('Error: Id required!');
+  }
   const coll = getClient().db('CSE341').collection('contacts');
-  const contact = await coll.findOne(
-    req.params.oid ? { _id: oid } : { id: id },
-  );
+  const query = { _id: ObjectId(req.params.id) };
+  const contact = await coll.findOne(query);
   res.setHeader('Content-Type', 'application/json');
   res.status(200).json(contact);
 };
@@ -28,7 +28,7 @@ const createContact = async (req, res) => {
     favoriteColor: req.body.favoriteColor,
     birthday: req.body.birthday
   };
-  const response = await mongodb.getClient().db('CSE341').collection('contacts').insertOne(contact);
+  const response = await getClient().db('CSE341').collection('contacts').insertOne(contact);
   if (response.acknowledged) {
     res.status(201).json(response);
   } else {
@@ -37,16 +37,33 @@ const createContact = async (req, res) => {
 };
 
 const updateContact = async (req, res) => {
-  const userId = new ObjectId(req.params.id);
-  // be aware of updateOne if you only want to update specific fields
-  const contact = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday
-  };
-  const response = await mongodb.getClient().db('CSE341').collection('contacts').replaceOne({ _id: userId }, contact);
+  if (!req.params.id) {
+    throw Error('Error: Id required!');
+  }
+  const filter = { _id: ObjectId(req.params.id) };
+  const options = { upsert: true };
+  const updateDoc = { $set: {} };
+  if (req.body.firstName) {
+    updateDoc.$set.firstName = req.body.firstName;
+  }
+  if (req.body.lastName) {
+    updateDoc.$set.lastName = req.body.lastName;
+  }
+  if (req.body.email) {
+    updateDoc.$set.email = req.body.email;
+  }
+  if (req.body.favoriteColor) {
+    updateDoc.$set.favoriteColor = req.body.favoriteColor;
+  }
+  if (req.body.birthday) {
+    updateDoc.$set.birthday = req.body.birthday;
+  }
+
+  const response = await getClient()
+    .db('CSE341')
+    .collection('contacts')
+    .updateOne(filter, updateDoc, options);
+
   console.log(response);
   if (response.modifiedCount > 0) {
     res.status(204).send();
@@ -56,8 +73,18 @@ const updateContact = async (req, res) => {
 };
 
 const deleteContact = async (req, res) => {
+  if (!req.params.id) {
+    throw Error('Error: Id required!');
+  }
   const userId = new ObjectId(req.params.id);
-  const response = await mongodb.getClient().db('CSE341').collection('contacts').remove({ _id: userId }, true);
+  const filter = { _id: ObjectId(req.params.id) };
+  const options = { upsert: true };
+
+  const response = await getClient()
+    .db('CSE341')
+    .collection('contacts')
+    .deleteOne(filter, options);
+    
   console.log(response);
   if (response.deletedCount > 0) {
     res.status(204).send();
@@ -66,10 +93,10 @@ const deleteContact = async (req, res) => {
   }
 };
 
-module.exports = { 
-  getAll, 
-  getSingle, 
+module.exports = {
+  getAll,
+  getSingle,
   createContact,
   updateContact,
-  deleteContact 
+  deleteContact
 };
