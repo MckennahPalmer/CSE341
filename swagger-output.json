@@ -5,10 +5,10 @@
     "description": "It access a database full of contacts using this API and its GET, POST, PUT, and DELETE routes.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "",
   "basePath": "/",
   "schemes": [
-    "http"
+    "http", "https"
   ],
   "paths": {
     "/contacts/{id}": {
