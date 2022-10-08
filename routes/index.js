@@ -10,4 +10,6 @@ router.get('/', function (req, res) {
     );
 });
 
+router.use('/api-docs', require('./docs'));
+
 module.exports = router;
