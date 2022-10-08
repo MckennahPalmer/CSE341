@@ -2,6 +2,7 @@ const { getClient } = require('../db/mongo_client');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {
+  // #swagger.description = 'Get all contacts'
   const coll = getClient().db('CSE341').collection('contacts');
   const cursor = coll.find({});
   const result = await cursor.toArray();
@@ -10,6 +11,7 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
+  // #swagger.description = 'Get the Contacts'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
@@ -21,6 +23,7 @@ const getSingle = async (req, res) => {
 };
 
 const createContact = async (req, res) => {
+  // #swagger.description = 'Create a contact'
   const contact = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -37,6 +40,7 @@ const createContact = async (req, res) => {
 };
 
 const updateContact = async (req, res) => {
+  // #swagger.description = 'Update a contact'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
@@ -73,6 +77,7 @@ const updateContact = async (req, res) => {
 };
 
 const deleteContact = async (req, res) => {
+  // #swagger.description = 'Delete a Contact'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
