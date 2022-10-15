@@ -25,7 +25,7 @@ const getSingle = async (req, res) => {
 const createPun = async (req, res) => {
   // #swagger.description = 'Create a Pun'
   const pun = {
-    createdby: req.body.fullName,
+    createdby: req.body.createdby,
     subject: req.body.subject,
     message: req.body.message,
   };
