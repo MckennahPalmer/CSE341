@@ -25,11 +25,9 @@ const getSingle = async (req, res) => {
 const createPun = async (req, res) => {
   // #swagger.description = 'Create a Pun'
   const pun = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    favoriteColor: req.body.favoriteColor,
-    birthday: req.body.birthday
+    createdby: req.body.fullName,
+    subject: req.body.subject,
+    message: req.body.message,
   };
   const response = await getClient().db('CSE341').collection('puns').insertOne(pun);
   if (response.acknowledged) {
@@ -39,7 +37,7 @@ const createPun = async (req, res) => {
   }
 };
 
-const updatePun = async (req, res) => {
+/*const updatePun = async (req, res) => {
   // #swagger.description = 'Update a Pun'
   if (!req.params.id) {
     throw Error('Error: Id required!');
@@ -74,7 +72,7 @@ const updatePun = async (req, res) => {
   } else {
     res.status(500).json(response.error || 'Some error occurred while updating the pun.');
   }
-};
+};*/
 
 const deletePun = async (req, res) => {
   // #swagger.description = 'Delete a Pun'
@@ -102,6 +100,6 @@ module.exports = {
   getAll,
   getSingle,
   createPun,
-  updatePun,
+  //updatePun,
   deletePun
 };

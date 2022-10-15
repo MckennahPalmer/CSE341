@@ -11,6 +11,6 @@ router.post('/', createPun);
 
 //router.put('/:id', updatePun);
 
-//router.delete('/:id', deletePun);
+router.delete('/:id', deletePun);
 
 module.exports = router;
