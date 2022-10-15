@@ -13,7 +13,7 @@ app
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
-  .use('/contacts', require('./routes/contacts'))
+  .use('/puns', require('./routes/puns'))
   .use('/', require('./routes/index'))
   .listen(port, function (err) {
     if (err) console.log(err);

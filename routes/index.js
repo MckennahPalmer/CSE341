@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
   res
     .status(200)
     .send(
-      "<html><body style='background-color:green;'><div style='color:white;'>Hey! You made it!</div></body></html>",
+      "<html><body style='background-color:darkgreen;'><div style='color:grey;'>Mckennah's Joke Book</div></body></html>",
     );
 });
 

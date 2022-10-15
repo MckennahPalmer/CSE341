@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAll, getSingle, createContact, updateContact, deleteContact } = require('../controllers/contacts');
+const { getAll, getSingle, createPun, updatePun, deletePun } = require('../controllers/puns');
 
 router.get('/:id', getSingle);
 
 router.get('/', getAll);
 
-router.post('/', createContact);
+router.post('/', createPun);
 
-router.put('/:id', updateContact);
+//router.put('/:id', updatePun);
 
-router.delete('/:id', deleteContact);
+//router.delete('/:id', deletePun);
 
 module.exports = router;

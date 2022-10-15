@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node phonebook.js",
+    "start": "node jokebook.js",
     "generate-docs": "node swagger.js"
   },
   "repository": {

@@ -2,8 +2,8 @@ const { getClient } = require('../db/mongo_client');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {
-  // #swagger.description = 'Get all contacts'
-  const coll = getClient().db('CSE341').collection('contacts');
+  // #swagger.description = 'Get all Puns'
+  const coll = getClient().db('CSE341').collection('puns');
   const cursor = coll.find({});
   const result = await cursor.toArray();
   res.setHeader('Content-Type', 'application/json');
@@ -11,36 +11,36 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
-  // #swagger.description = 'Get the Contacts'
+  // #swagger.description = 'Get the Puns'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
-  const coll = getClient().db('CSE341').collection('contacts');
+  const coll = getClient().db('CSE341').collection('puns');
   const query = { _id: ObjectId(req.params.id) };
-  const contact = await coll.findOne(query);
+  const pun = await coll.findOne(query);
   res.setHeader('Content-Type', 'application/json');
-  res.status(200).json(contact);
+  res.status(200).json(pun);
 };
 
-const createContact = async (req, res) => {
-  // #swagger.description = 'Create a contact'
-  const contact = {
+const createPun = async (req, res) => {
+  // #swagger.description = 'Create a Pun'
+  const pun = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
     birthday: req.body.birthday
   };
-  const response = await getClient().db('CSE341').collection('contacts').insertOne(contact);
+  const response = await getClient().db('CSE341').collection('puns').insertOne(pun);
   if (response.acknowledged) {
     res.status(201).json(response);
   } else {
-    res.status(500).json(response.error || 'Some error occurred while creating the contact.');
+    res.status(500).json(response.error || 'Some error occurred while creating the pun.');
   }
 };
 
-const updateContact = async (req, res) => {
-  // #swagger.description = 'Update a contact'
+const updatePun = async (req, res) => {
+  // #swagger.description = 'Update a Pun'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
@@ -65,19 +65,19 @@ const updateContact = async (req, res) => {
 
   const response = await getClient()
     .db('CSE341')
-    .collection('contacts')
+    .collection('puns')
     .updateOne(filter, updateDoc, options);
 
   console.log(response);
   if (response.modifiedCount > 0) {
     res.status(204).send();
   } else {
-    res.status(500).json(response.error || 'Some error occurred while updating the contact.');
+    res.status(500).json(response.error || 'Some error occurred while updating the pun.');
   }
 };
 
-const deleteContact = async (req, res) => {
-  // #swagger.description = 'Delete a Contact'
+const deletePun = async (req, res) => {
+  // #swagger.description = 'Delete a Pun'
   if (!req.params.id) {
     throw Error('Error: Id required!');
   }
@@ -87,21 +87,21 @@ const deleteContact = async (req, res) => {
 
   const response = await getClient()
     .db('CSE341')
-    .collection('contacts')
+    .collection('puns')
     .deleteOne(filter, options);
     
   console.log(response);
   if (response.deletedCount > 0) {
     res.status(204).send();
   } else {
-    res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
+    res.status(500).json(response.error || 'Some error occurred while deleting the pun.');
   }
 };
 
 module.exports = {
   getAll,
   getSingle,
-  createContact,
-  updateContact,
-  deleteContact
+  createPun,
+  updatePun,
+  deletePun
 };
