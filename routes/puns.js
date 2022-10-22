@@ -9,7 +9,7 @@ router.get('/', getAll);
 
 router.post('/', createPun);
 
-//router.put('/:id', updatePun);
+router.put('/:id', updatePun);
 
 router.delete('/:id', deletePun);
 

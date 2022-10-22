@@ -37,7 +37,7 @@ const createPun = async (req, res) => {
   }
 };
 
-/*const updatePun = async (req, res) => {
+const updatePun = async (req, res) => {
   // #swagger.description = 'Update a Pun'
   if (!req.params.id) {
     throw Error('Error: Id required!');
@@ -45,20 +45,14 @@ const createPun = async (req, res) => {
   const filter = { _id: ObjectId(req.params.id) };
   const options = { upsert: true };
   const updateDoc = { $set: {} };
-  if (req.body.firstName) {
-    updateDoc.$set.firstName = req.body.firstName;
+  if (req.body.createdby) {
+    updateDoc.$set.createdby = req.body.createdby;
   }
-  if (req.body.lastName) {
-    updateDoc.$set.lastName = req.body.lastName;
+  if (req.body.subject) {
+    updateDoc.$set.subject = req.body.subject;
   }
-  if (req.body.email) {
-    updateDoc.$set.email = req.body.email;
-  }
-  if (req.body.favoriteColor) {
-    updateDoc.$set.favoriteColor = req.body.favoriteColor;
-  }
-  if (req.body.birthday) {
-    updateDoc.$set.birthday = req.body.birthday;
+  if (req.body.message) {
+    updateDoc.$set.message = req.body.message;
   }
 
   const response = await getClient()
@@ -72,7 +66,7 @@ const createPun = async (req, res) => {
   } else {
     res.status(500).json(response.error || 'Some error occurred while updating the pun.');
   }
-};*/
+};
 
 const deletePun = async (req, res) => {
   // #swagger.description = 'Delete a Pun'
@@ -100,6 +94,6 @@ module.exports = {
   getAll,
   getSingle,
   createPun,
-  //updatePun,
+  updatePun,
   deletePun
 };
