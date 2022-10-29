@@ -14,6 +14,7 @@ app
     next();
   })
   .use('/puns', require('./routes/puns'))
+  //.use('/users', require('./routes/users')) //new line
   .use('/', require('./routes/index'))
   .listen(port, function (err) {
     if (err) console.log(err);
