@@ -12,4 +12,6 @@ const doc = {
 const outputFile = 'swagger-output.json';
 const endpointsFiles = ['./jokebook.js'];
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
+  require('./jokebook.js'); // project root
+});
