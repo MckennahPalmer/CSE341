@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node swagger.js"
+    "test": "npx mocha auth/tests/**/*.js --exit",
+    "test-dev": "nodemon --exec 'yarn test || exit 1'",
+    "authServer": "node swagger.js",
+    "devAuth": "npx nodemon swagger.js"
   },
   "repository": {
     "type": "git",
@@ -19,12 +21,20 @@
   },
   "homepage": "https://github.com/MckennahPalmer/CSE341#readme",
   "dependencies": {
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "express-oauth-server": "^2.0.0",
-    "mongodb": "^4.10.0",
+    "mongodb": "^4.11.0",
     "mongoose": "^6.7.1",
+    "oauth2-server": "^3.1.1",
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20"
   }
 }

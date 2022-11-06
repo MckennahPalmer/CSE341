@@ -2,8 +2,8 @@
 /**
  * Module dependencies.
  */
-
- var mongoose = require('mongoose');
+ const { getMongoose } = require('../db/mongo_client');
+ var mongoose = getMongoose();
  var Schema = mongoose.Schema;
  
  /**
@@ -24,6 +24,7 @@
  mongoose.model('OAuthClients', new Schema({
    clientId: { type: String },
    clientSecret: { type: String },
+   grants: { type: Array },
    redirectUris: { type: Array }
  }));
  
@@ -34,10 +35,19 @@
    password: { type: String },
    username: { type: String }
  }));
+
+ mongoose.model('OAuthAuthCode', new Schema({
+  authorizationCode: { type: String, default: '' },
+  expiresOn: { type: Date },
+  redirectUri: { type: String },
+  client: { type: Object },
+  user: { type: Object }
+}));
  
  var OAuthTokensModel = mongoose.model('OAuthTokens');
  var OAuthClientsModel = mongoose.model('OAuthClients');
  var OAuthUsersModel = mongoose.model('OAuthUsers');
+ var OAuthAuthCodeModel = mongoose.model('OAuthAuthCode');
  
  /**
   * Get access token.

@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
   res.status(200).json(result);
 };
 
-const getSingleUsers = async (req, res) => {
+const getUser = async (req, res) => {
   // #swagger.description = 'Get the users'
   if (!req.params.id) {
     throw Error('Error: Id required!');
@@ -108,7 +108,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
-  getSingleUsers,
+  getUser,
   createUser,
   updateUser,
   deleteUser

@@ -47,9 +47,20 @@ const closeClient = async () => {
   }
 };
 
+const getUserByUsername = async (username) => {
+  // #swagger.description = 'Get User by username'
+  if (!username) {
+    throw Error('Error: Valid username required!');
+  }
+  const coll = _client.db('CSE341').collection('users');
+  const query = { username };
+  return await coll.findOne(query);
+};
+
 module.exports = {
   initClient,
   getClient,
+  getUserByUsername,
   getMongoose,
   closeClient,
 };
