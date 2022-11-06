@@ -13,8 +13,9 @@ use('test');
 // Insert a few documents into the sales collection.
 db.oauthclients.insertMany([
   {
-    clientId: 'pun_client',
-    clientSecret: 'pun_secret',
-    redirectUris: ['http://localhost:8080/puns']
+    clientId: 'punClient',
+    clientSecret: 'punSecret',
+    grants: ['authorization_code', 'refresh_token'],
+    redirectUris: ['http://localhost:8080/client/app']
   }
 ]);

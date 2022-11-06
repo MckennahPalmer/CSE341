@@ -74,8 +74,14 @@ var OAuthAuthCodeModel = mongoose.model('OAuthAuthCode');
 const DebugControl = require('../utilities/debug.js')
 
 module.exports = {
-  getClient: function (clientId, clientSecret) {
-    return OAuthClientsModel.findOne({ clientId: clientId, clientSecret: clientSecret }).lean();
+  getClient: async function (clientId, clientSecret) {
+    const lookupClient = {
+      clientId
+    }
+    if (clientSecret) {
+      lookupClient.clientSecret = clientSecret
+    }
+    return await OAuthClientsModel.findOne(lookupClient).lean();
     // // query db for details with client
     // log({
     //   title: 'Get Client',
@@ -104,7 +110,7 @@ module.exports = {
   //   })
   //
   // },
-  saveToken: (token, client, user) => {
+  saveToken: async (token, client, user) => {
     var accessToken = new OAuthTokensModel({
       accessToken: token.accessToken,
       accessTokenExpiresOn: token.accessTokenExpiresOn,
@@ -136,20 +142,20 @@ module.exports = {
       return data;
     });
   },
-  getAccessToken: (bearerToken) => {
+  getAccessToken: async (bearerToken) => {
     // Adding `.lean()`, as we get a mongoose wrapper object back from `findOne(...)`, and oauth2-server complains.
-    return OAuthTokensModel.findOne({ accessToken: bearerToken }).lean();
+    return await OAuthTokensModel.findOne({ accessToken: bearerToken }).lean();
   },
-  getRefreshToken: (refreshToken) => {
-    return OAuthTokensModel.findOne({ refreshToken: refreshToken }).lean();
+  getRefreshToken: async (refreshToken) => {
+    return await OAuthTokensModel.findOne({ refreshToken: refreshToken }).lean();
   },
-  revokeToken: token => {
-    return OAuthTokensModel.deleteOne({ refreshToken: refreshToken }).lean();
+  revokeToken: async token => {
+    return await OAuthTokensModel.deleteOne({ refreshToken: refreshToken }).lean();
   },
-  getUser: (username, password) => {
-    return OAuthUsersModel.findOne({ username: username, password: password }).lean();
+  getUser: async (username, password) => {
+    return await OAuthUsersModel.findOne({ username: username, password: password }).lean();
   },
-  generateAuthorizationCode: (client, user, scope) => {
+  generateAuthorizationCode: async (client, user, scope) => {
     /* 
     For this to work, you are going have to hack this a little bit:
     1. navigate to the node_modules folder
@@ -183,7 +189,7 @@ module.exports = {
       .digest('hex')
     return code
   },
-  saveAuthorizationCode: (code, client, user) => {
+  saveAuthorizationCode: async (code, client, user) => {
     /* This is where you store the access code data into the database */
     log({
       title: 'Save Authorization Code',
@@ -203,7 +209,7 @@ module.exports = {
       redirectUri: `${code.redirectUri}`,
     }, db.authorizationCode)))
   },
-  getAuthorizationCode: authorizationCode => {
+  getAuthorizationCode: async authorizationCode => {
     /* this is where we fetch the stored data from the code */
     log({
       title: 'Get Authorization code',
@@ -215,7 +221,7 @@ module.exports = {
       resolve(db.authorizationCode)
     })
   },
-  revokeAuthorizationCode: authorizationCode => {
+  revokeAuthorizationCode: async authorizationCode => {
     /* This is where we delete codes */
     log({
       title: 'Revoke Authorization Code',
@@ -233,7 +239,7 @@ module.exports = {
     const codeWasFoundAndDeleted = true  // Return true if code found and deleted, false otherwise
     return new Promise(resolve => resolve(codeWasFoundAndDeleted))
   },
-  verifyScope: (token, scope) => {
+  verifyScope: async (token, scope) => {
     /* This is where we check to make sure the client has access to this scope */
     log({
       title: 'Verify Scope',

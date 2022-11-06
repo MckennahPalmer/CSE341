@@ -38,6 +38,15 @@ router.post('/authorize',async (req,res,next) => {
   return res.redirect(`/oauth?success=false&${params}`)
 }, (req,res, next) => { // sends us to our redirect with an authorization code in our url
   DebugControl.log.flow('Authorization')
+  req.body = {
+    ...req.body,
+    client_id: process.env.OAUTH_CLIENT_ID ?? 'myClientId',
+    client_secret: process.env.OAUTH_CLIENT_SECRET ?? '',
+    redirect_uri: process.env.OAUTH_REDIRECT_URI ?? 'http://localhost:8080/client/app', 
+    response_type: process.env.OAUTH_RESPONSE_TYPE ?? 'code', 
+    grant_type: process.env.OAUTH_GRANT_TYPE ?? 'authorization_code', 
+    state: process.env.OAUTH_STATE ?? 'myState',
+  }
   return next()
 }, oauthServer.authorize({
   authenticateHandler: {
@@ -60,6 +69,13 @@ router.post('/authorize',async (req,res,next) => {
 
 router.post('/token', (req,res,next) => {
   DebugControl.log.flow('Token')
+  req.body = {
+    ...req.body,
+    client_id: process.env.OAUTH_CLIENT_ID ?? 'myClientId',
+    client_secret: process.env.OAUTH_CLIENT_SECRET ?? '', 
+    grant_type: process.env.OAUTH_GRANT_TYPE ?? 'authorization_code', 
+    state: process.env.OAUTH_STATE ?? 'myState'
+  }
   next()
 },oauthServer.token({
   requireClientAuthentication: { // whether client needs to provide client_secret
